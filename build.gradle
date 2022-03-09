@@ -25,11 +25,8 @@ dependencies {
 	implementation 'com.fasterxml.jackson.core:jackson-core:2.12.2'
 	implementation 'com.fasterxml.jackson.core:jackson-annotations:2.12.2'
 	implementation 'com.fasterxml.jackson.core:jackson-databind:2.12.2'
-	implementation group: 'org.postgresql', name: 'postgresql', version: '42.1.4'
+	implementation group: 'org.postgresql', name: 'postgresql'
 	implementation group: 'org.json', name: 'json', version: '20090211'
-	testCompile group: 'org.testng', name: 'testng', version: '7.3.0'
-	implementation group: 'io.zonky.test', name: 'embedded-database-spring-test', version: '1.6.3'
-	implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.12.2'
 }
 
 

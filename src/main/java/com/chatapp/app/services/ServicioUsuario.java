@@ -14,32 +14,6 @@ public class ServicioUsuario {
 
     @Autowired
     private  RepositorioUsuario repUsuario;
-/*
-    @Transactional
-    public void registrar(String nombre, String contrasena, String email) throws Exception {
-        Usuario usuario = new Usuario(id, contrasena, Rol.USUARIO);
-        if (!repUsuario.existsById(usuario.getId())) {
-            repUsuario.save(usuario);
-        } else {
-            throw new Exception();
-        }
-    }
-
-    public String iniciarSesion(String email, String contrasena) throws Exception{
-        Optional<Usuario> usuario = repUsuario.findUsuarioByEmail(email);
-       // if (usuario.get().getContrasena().equals(contrasena)) {
-            return usuario.get().getId();
-        }
-       // else {
-       //     throw new Exception();
-       // }
-   // }
-*/
-
-    public Usuario obtenerUsuario(String nombre) throws Exception {
-        Optional<Usuario> usuario = repUsuario.findByNombre(nombre);
-        return usuario.get();
-    }
 
     public boolean existeUsuario(String nombre) {
         return repUsuario.existsByNombre(nombre);

@@ -28,6 +28,7 @@ public class ServicioChat {
     public void guardarMensaje(String fuente, String destino, String contenido, boolean leido) throws Exception {
         Optional<Usuario> ufuente = repositorioUsuario.findByNombre(fuente);
         Optional<Usuario> udestino = repositorioUsuario.findByNombre(destino);
+
         if (ufuente.isPresent() && udestino.isPresent()) {
             Mensaje m = new Mensaje(ufuente.get(), udestino.get(), new Date(), contenido, leido);
             if (m.getContenido().length() < LONGITUD_MAXIMA) {

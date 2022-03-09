@@ -92,6 +92,7 @@ public class Rabbit {
     }
 
     String tratarGuardarMensaje(JSONObject parametros) throws JSONException {
+        System.out.println(parametros);
         String fuente = parametros.getString("fuente");
         String destino = parametros.getString("destino");
         String contenido = parametros.getString("contenido");
@@ -106,12 +107,15 @@ public class Rabbit {
 
     String tratarValidarUsuario(JSONObject parametros) throws JSONException {
         try {
-            servicioUsuario.existeUsuario(parametros.getString("nombre"));
-            return RespuestaFactory.crearRespuestaVerificarUsuario(true);
+            if (servicioUsuario.existeUsuario(parametros.getString("nombre"))) {
+                return RespuestaFactory.crearRespuestaVerificarUsuario(true);
+            } else {
+                return RespuestaFactory.crearRespuestaVerificarUsuario(false);
+            }
+
         } catch (Exception e) {
             return RespuestaFactory.crearRespuestaVerificarUsuario(false);
         }
-
     }
 /*
     String tratarRegistro(JSONObject parametros) throws JSONException {
