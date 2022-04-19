@@ -4,6 +4,7 @@ import com.chatapp.app.model.Mensaje;
 import com.chatapp.app.model.Usuario;
 import com.chatapp.app.services.ServicioChat;
 import com.chatapp.app.services.ServicioUsuario;
+import com.chatapp.app.services.ServicioGrupo;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -23,6 +24,9 @@ public class Rabbit {
 
     @Autowired
     private ServicioUsuario servicioUsuario;
+
+    @Autowired
+    private ServicioGrupo servicioGrupo;
 
     @Autowired
     private ServicioChat servicioChat;
@@ -45,8 +49,12 @@ public class Rabbit {
             case "AUTENTICAR_USUARIO": return tratarValidarUsuario(mensaje.getJSONObject(PARAMETROS_NOMBRE));
             case "GUARDAR_MENSAJE": return tratarGuardarMensaje(mensaje.getJSONObject(PARAMETROS_NOMBRE));
             case "OBTENER_TODOS_USUARIOS": return tratarObtenerTodosUsuarios(mensaje.getJSONObject(PARAMETROS_NOMBRE));
+            case "OBTENER_TODOS_GRUPOS": return tratarObtenerTodosGrupos(mensaje.getJSONObject(PARAMETROS_NOMBRE));
             case "OBTENER_MENSAJES": return tratarObtenerMensajes(mensaje.getJSONObject(PARAMETROS_NOMBRE));
             case "OBTENER_MENSAJES_NO_LEIDOS": return tratarObtenerMensajesNoLeidos(mensaje.getJSONObject(PARAMETROS_NOMBRE));
+            case "CREAR_GRUPO": return tratarCrearGrupo(mensaje.getJSONObject(PARAMETROS_NOMBRE));
+            case "ELIMINAR_GRUPO": return tratarEliminarGrupo(mensaje.getJSONObject(PARAMETROS_NOMBRE));
+            case "ANADIR_USUARIO_GRUPO": return tratarAnadirUsuarioGrupo(mensaje.getJSONObject(PARAMETROS_NOMBRE));
         }
 
         return null;
@@ -91,6 +99,48 @@ public class Rabbit {
         }
     }
 
+    String tratarObtenerTodosGrupos(JSONObject parametros) throws JSONException {
+        try {
+            String miUsuario = parametros.getString("miusuario");
+            List<String> grupos = servicioGrupo.obtenerMisGrupos(miUsuario);
+            return RespuestaFactory.crearRespuestaObtenerTodosGrupos(true, grupos);
+        } catch (Exception e) {
+            return RespuestaFactory.crearRespuestaObtenerTodosGrupos(false, null);
+        }
+    }
+
+    private String tratarCrearGrupo(JSONObject parametros) throws JSONException {
+        try {
+            String miUsuario = parametros.getString("miusuario");
+            String nombreGrupo = parametros.getString("nombregrupo");
+            servicioGrupo.crearGrupo(miUsuario, nombreGrupo);
+            return RespuestaFactory.crearRespuestaCrearGrupo(true );
+        } catch (Exception e) {
+            return RespuestaFactory.crearRespuestaCrearGrupo(false);
+        }
+    }
+    private String tratarEliminarGrupo(JSONObject parametros) throws JSONException {
+        try {
+            String miUsuario = parametros.getString("miusuario");
+            String nombreGrupo = parametros.getString("nombregrupo");
+            servicioGrupo.eliminarGrupo(miUsuario, nombreGrupo);
+            return RespuestaFactory.crearRespuestaEliminarGrupo(true );
+        } catch (Exception e) {
+            return RespuestaFactory.crearRespuestaEliminarGrupo(false);
+        }
+    }
+
+    private String tratarAnadirUsuarioGrupo(JSONObject parametros) throws JSONException {
+        try {
+            String miUsuario = parametros.getString("miusuario");
+            String nombreUsuario = parametros.getString("nombreusuario");
+            String nombreGrupo = parametros.getString("nombregrupo");
+            servicioGrupo.anadirUsuarioGrupo(miUsuario, nombreUsuario, nombreGrupo);
+            return RespuestaFactory.crearRespuestaAnadirUsuarioGrupo(true );
+        } catch (Exception e) {
+            return RespuestaFactory.crearRespuestaAnadirUsuarioGrupo(false);
+        }
+    }
     String tratarGuardarMensaje(JSONObject parametros) throws JSONException {
         System.out.println(parametros);
         String fuente = parametros.getString("fuente");

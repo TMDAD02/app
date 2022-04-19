@@ -20,8 +20,8 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-websocket'
 
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	compile 'com.sendgrid:sendgrid-java:4.0.1'
-	compile group: 'com.google.zxing', name: 'javase', version: '3.3.0'
+	implementation 'com.sendgrid:sendgrid-java:4.0.1'
+	implementation group: 'com.google.zxing', name: 'javase', version: '3.3.0'
 	implementation 'com.fasterxml.jackson.core:jackson-core:2.12.2'
 	implementation 'com.fasterxml.jackson.core:jackson-annotations:2.12.2'
 	implementation 'com.fasterxml.jackson.core:jackson-databind:2.12.2'

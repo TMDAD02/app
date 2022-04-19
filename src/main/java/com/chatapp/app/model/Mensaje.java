@@ -19,6 +19,9 @@ public class Mensaje {
     @ManyToOne(optional = false, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Usuario destino;
 
+    @ManyToOne(optional = true, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Grupo destinogrupo;
+
     @Column(name = "fecha")
     private Date fecha;
 
@@ -33,6 +36,15 @@ public class Mensaje {
     public Mensaje(Usuario fuente, Usuario destino, Date fecha, String contenido, boolean leido) {
         this.fuente = fuente;
         this.destino = destino;
+        this.fecha = fecha;
+        this.contenido = contenido;
+        this.leido = leido;
+    }
+
+    public Mensaje(Usuario fuente, Grupo destino, Date fecha, String contenido, boolean leido) {
+        this.fuente = fuente;
+        this.destino = new Usuario();
+        this.destinogrupo = destino;
         this.fecha = fecha;
         this.contenido = contenido;
         this.leido = leido;

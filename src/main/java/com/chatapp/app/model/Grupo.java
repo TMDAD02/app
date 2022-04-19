@@ -7,13 +7,13 @@ import java.util.Collection;
 @Table(name = "grupos")
 public class Grupo {
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    /*@ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "usuarios_grupos",
             joinColumns = @JoinColumn(name = "id_usuario"),
             inverseJoinColumns = @JoinColumn(name = "id_grupo")
     )
-    private Collection<Usuario> usuarios;
+    private Collection<Usuario> usuarios;*/
 
 
 
@@ -24,16 +24,19 @@ public class Grupo {
     @Column(name = "nombre")
     private String nombre;
 
-    @Column(name = "tipo")
-    private String tipo;
+    @Column(name = "creador")
+    private String creador;
 
-    public Grupo(long id, String nombre, String tipo) {
+    public Grupo(long id, String nombre, String creador) {
         this.id = id;
         this.nombre = nombre;
-        this.tipo = tipo;
+        this.creador = creador;
     }
 
     public Grupo() { }
+
+    //crear dos contructorees de grupo
+
 
     public long getId() {
         return id;
@@ -43,7 +46,7 @@ public class Grupo {
         return nombre;
     }
 
-    public String getTipo() { return tipo; }
+    public String getCreador() { return creador; }
 
 
 }

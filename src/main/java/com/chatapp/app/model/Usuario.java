@@ -19,8 +19,8 @@ public class Usuario {
     @Enumerated(EnumType.STRING)
     private Rol rol;
 
-    @ManyToMany(mappedBy = "usuarios")
-    private Collection<Grupo> grupos;
+    //@ManyToMany(mappedBy = "usuarios")
+    //private Collection<Grupo> grupos;
 
 
     public Usuario(long id, String nombre, Rol rol) {
