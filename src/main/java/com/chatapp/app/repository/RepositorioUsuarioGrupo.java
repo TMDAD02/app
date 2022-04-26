@@ -11,4 +11,5 @@ import java.util.Optional;
 public interface RepositorioUsuarioGrupo extends CrudRepository<UsuarioGrupo, String>{
     Iterable<UsuarioGrupo> findAllById(long id);
     Iterable<UsuarioGrupo> findAllByIdUsuario(long id);
+    Optional<UsuarioGrupo> findByIdGrupoAndIdUsuario(long idgrupo, long idusuario);
 }

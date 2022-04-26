@@ -84,7 +84,22 @@ public class ServicioGrupo {
         }else{
             System.out.println("No se puede alamacenar porque la persona no es la creadora del grupo");
         }
+    }
 
+    public void eliminarUsuarioGrupo(String creador, String usuarioo, String nombreGrupo){
+        Optional<Grupo> grupo = repGroup.findByNombre(nombreGrupo);
+        Optional<Usuario> usuario = repUsuario.findByNombre(usuarioo);
+        if(grupo.get().getCreador().equals(creador)){
+            System.out.println("Eres el creador del grupo asi que puedes eliminar");
+            Optional<UsuarioGrupo> usuarioToDelete = repUsuarioGroup.findByIdGrupoAndIdUsuario(grupo.get().getId(), usuario.get().getId() );
+            if(usuarioToDelete.isPresent()){
+                repUsuarioGroup.delete(usuarioToDelete.get());
+            }
+
+        }else{
+            System.out.println("No se puede eliminar porque la persona no es la creadora del grupo");
+        }
+        // CHEKEARRRRRRRR CONDICOONNNNNNNNNNNNNNN
 
     }
 

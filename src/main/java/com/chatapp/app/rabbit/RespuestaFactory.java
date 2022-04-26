@@ -137,6 +137,7 @@ public class RespuestaFactory {
 
             return jsonRespuesta.toString();
         }
+
     public static String crearRespuestaObtenerMensajesNoLeidos(boolean correcto, List<JSONObject> mensajes) throws JSONException {
         JSONObject jsonRespuesta = new JSONObject();
 
@@ -151,4 +152,19 @@ public class RespuestaFactory {
 
         return jsonRespuesta.toString();
     }
+    public static String crearRespuestaEliminarUsuarioGrupo(boolean correcto) throws JSONException {
+        JSONObject jsonRespuesta = new JSONObject();
+
+        if (correcto) {
+            jsonRespuesta.put(RESULTADO_RESPUESTA_NOMBRE, "ELIMINAR_USUARIO_GRUPO_CORRECTO");
+            JSONObject parametros = new JSONObject();
+            //parametros.put("listaMensajes", new JSONArray(mensajes));
+            jsonRespuesta.put(PARAMETROS_NOMBRE, parametros);
+        } else {
+            jsonRespuesta.put(RESULTADO_RESPUESTA_NOMBRE, "ELIMINAR_USUARIO_GRUPO_INCORRECTO");
+        }
+
+        return jsonRespuesta.toString();
+    }
+
 }

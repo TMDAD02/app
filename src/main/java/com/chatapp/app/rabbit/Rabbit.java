@@ -55,6 +55,7 @@ public class Rabbit {
             case "CREAR_GRUPO": return tratarCrearGrupo(mensaje.getJSONObject(PARAMETROS_NOMBRE));
             case "ELIMINAR_GRUPO": return tratarEliminarGrupo(mensaje.getJSONObject(PARAMETROS_NOMBRE));
             case "ANADIR_USUARIO_GRUPO": return tratarAnadirUsuarioGrupo(mensaje.getJSONObject(PARAMETROS_NOMBRE));
+            case "ELIMINAR_USUARIO_GRUPO": return tratarEliminarUsuarioGrupo(mensaje.getJSONObject(PARAMETROS_NOMBRE));
         }
 
         return null;
@@ -141,6 +142,19 @@ public class Rabbit {
             return RespuestaFactory.crearRespuestaAnadirUsuarioGrupo(false);
         }
     }
+
+    private String tratarEliminarUsuarioGrupo(JSONObject parametros) throws JSONException {
+        try {
+            String miUsuario = parametros.getString("miusuario");
+            String nombreUsuario = parametros.getString("nombreusuario");
+            String nombreGrupo = parametros.getString("nombregrupo");
+            servicioGrupo.eliminarUsuarioGrupo(miUsuario, nombreUsuario, nombreGrupo);
+            return RespuestaFactory.crearRespuestaEliminarUsuarioGrupo(true );
+        } catch (Exception e) {
+            return RespuestaFactory.crearRespuestaEliminarUsuarioGrupo(false);
+        }
+    }
+
     String tratarGuardarMensaje(JSONObject parametros) throws JSONException {
         System.out.println(parametros);
         String fuente = parametros.getString("fuente");
