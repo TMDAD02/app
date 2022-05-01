@@ -156,7 +156,6 @@ public class Rabbit {
     }
 
     String tratarGuardarMensaje(JSONObject parametros) throws JSONException {
-        System.out.println(parametros);
         String fuente = parametros.getString("fuente");
         String destino = parametros.getString("destino");
         String contenido = parametros.getString("contenido");
@@ -164,7 +163,7 @@ public class Rabbit {
         try {
             servicioChat.guardarMensaje(fuente, destino, contenido, leido);
             return RespuestaFactory.crearRespuestaVerificarUsuario(true);
-        } catch (Exception e) { // No necesitamos responder, devolvemos lo que sea...
+        } catch (Exception e) {
             return RespuestaFactory.crearRespuestaVerificarUsuario(false);
         }
     }

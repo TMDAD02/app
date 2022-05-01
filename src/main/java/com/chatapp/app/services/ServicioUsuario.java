@@ -19,7 +19,6 @@ public class ServicioUsuario {
         return repUsuario.existsByNombre(nombre);
     }
 
-
     public List<String> obtenerTodosUsuarios(String miUsuario) {
         Iterable<Usuario> iterableUsuarios = repUsuario.findByNombreNot(miUsuario);
         List<String> listaUsuarios = new ArrayList<>();

@@ -2,7 +2,9 @@ package com.chatapp.app.model;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "usuarios")
@@ -19,12 +21,16 @@ public class Usuario {
     @Enumerated(EnumType.STRING)
     private Rol rol;
 
-    //@ManyToMany(mappedBy = "usuarios")
-    //private Collection<Grupo> grupos;
+    @OneToMany(mappedBy = "creador", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Grupo> creadores;
+
+    @ManyToMany(fetch = FetchType.EAGER,
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE
+            }, mappedBy = "usuarios")
+    private Set<Grupo> grupos  = new HashSet<>();
 
 
-    public Usuario(long id, String nombre, Rol rol) {
-        this.id = id;
+    public Usuario(String nombre, Rol rol) {
         this.nombre = nombre;
         this.rol = rol;
     }
@@ -38,6 +44,14 @@ public class Usuario {
 
     public long getId() {
         return id;
+    }
+
+    public Set<Grupo> getGrupos() {
+        return grupos;
+    }
+
+    public void setGrupos(Set<Grupo> grupos) {
+        this.grupos = grupos;
     }
 
 }
