@@ -62,12 +62,19 @@ public class ServicioGrupo {
 
     public void anadirUsuarioGrupo(String creador, String nombreUsuario, String nombreGrupo) throws Exception {
         Optional<Grupo> grupo = repGrupo.findByNombre(nombreGrupo);
+        Optional<Usuario> creator = repUsuario.findByNombre(creador);
         Optional<Usuario> usuario = repUsuario.findByNombre(nombreUsuario);
-        if(grupo.isPresent() && usuario.isPresent()) {
+
+        if(grupo.isPresent() && usuario.isPresent() && creator.isPresent() ) {
             Grupo g = grupo.get();
-            g.aniadirUsuario(usuario.get());
-            System.out.println("Hecho.");
-            repGrupo.save(g);
+            Usuario u = creator.get();
+            if(g.getCreador().getId() == u.getId() ){
+                g.aniadirUsuario(usuario.get());
+                repGrupo.save(g);
+                System.out.println("Usuario almacenado");
+            }else {
+                throw new Exception();
+            }
         } else {
             throw new Exception();
         }
@@ -84,9 +91,12 @@ public class ServicioGrupo {
             Usuario ue = usuarioEliminar.get();
             if (g.getCreador().getId() == u.getId()) {
                 g.getColeccionUsuarios().remove(ue);
+            } else {
+                throw new Exception();
             }
+        }else {
+            throw new Exception();
         }
-        throw new Exception();
 
     }
 
@@ -102,6 +112,7 @@ public class ServicioGrupo {
             } else {
                 throw new Exception();
             }
+        }else {
             throw new Exception();
         }
     }
