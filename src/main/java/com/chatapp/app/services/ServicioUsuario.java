@@ -16,7 +16,12 @@ public class ServicioUsuario {
     private  RepositorioUsuario repUsuario;
 
     public boolean existeUsuario(String nombre) {
-        return repUsuario.existsByNombre(nombre);
+        long t0 = System.currentTimeMillis();
+        boolean existeUsuario =  repUsuario.existsByNombre(nombre);
+        long t1 = System.currentTimeMillis();
+        long tiempo = t1-t0;
+        System.out.println("Tiempo login: " + tiempo);
+        return  existeUsuario;
     }
 
     public List<String> obtenerTodosUsuarios(String miUsuario) {
