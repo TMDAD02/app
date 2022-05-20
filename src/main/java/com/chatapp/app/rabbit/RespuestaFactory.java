@@ -79,16 +79,30 @@ public class RespuestaFactory {
         return jsonRespuesta.toString();
     }
 
-    public static String crearRespuestaObtenerMensajes(boolean correcto, List<JSONObject> mensajes) throws JSONException {
+    public static String crearRespuestaObtenerMensajesUsuarios(boolean correcto, List<JSONObject> mensajes) throws JSONException {
         JSONObject jsonRespuesta = new JSONObject();
 
         if (correcto) {
-            jsonRespuesta.put(RESULTADO_RESPUESTA_NOMBRE, "OBTENER_MENSAJES_CORRECTO");
+            jsonRespuesta.put(RESULTADO_RESPUESTA_NOMBRE, "OBTENER_MENSAJES_USUARIOS_CORRECTO");
             JSONObject parametros = new JSONObject();
             parametros.put("listaMensajes", new JSONArray(mensajes));
             jsonRespuesta.put(PARAMETROS_NOMBRE, parametros);
         } else {
-            jsonRespuesta.put(RESULTADO_RESPUESTA_NOMBRE, "OBTENER_MENSAJES_INCORRECTO");
+            jsonRespuesta.put(RESULTADO_RESPUESTA_NOMBRE, "OBTENER_MENSAJES_USUARIOS_INCORRECTO");
+        }
+
+        return jsonRespuesta.toString();
+    }
+    public static String crearRespuestaObtenerMensajesGrupos(boolean correcto, List<JSONObject> mensajes) throws JSONException {
+        JSONObject jsonRespuesta = new JSONObject();
+
+        if (correcto) {
+            jsonRespuesta.put(RESULTADO_RESPUESTA_NOMBRE, "OBTENER_MENSAJES_GRUPOS_CORRECTO");
+            JSONObject parametros = new JSONObject();
+            parametros.put("listaMensajes", new JSONArray(mensajes));
+            jsonRespuesta.put(PARAMETROS_NOMBRE, parametros);
+        } else {
+            jsonRespuesta.put(RESULTADO_RESPUESTA_NOMBRE, "OBTENER_MENSAJES_GRUPOS_INCORRECTO");
         }
 
         return jsonRespuesta.toString();

@@ -50,7 +50,9 @@ public class Rabbit {
             case "GUARDAR_MENSAJE": return tratarGuardarMensaje(mensaje.getJSONObject(PARAMETROS_NOMBRE));
             case "OBTENER_TODOS_USUARIOS": return tratarObtenerTodosUsuarios(mensaje.getJSONObject(PARAMETROS_NOMBRE));
             case "OBTENER_TODOS_GRUPOS": return tratarObtenerTodosGrupos(mensaje.getJSONObject(PARAMETROS_NOMBRE));
-            case "OBTENER_MENSAJES": return tratarObtenerMensajes(mensaje.getJSONObject(PARAMETROS_NOMBRE));
+            //case "OBTENER_MENSAJES": return tratarObtenerMensajes(mensaje.getJSONObject(PARAMETROS_NOMBRE));
+            case "OBTENER_MENSAJES_USUARIOS": return tratarObtenerMensajesUsuarios(mensaje.getJSONObject(PARAMETROS_NOMBRE));
+            case "OBTENER_MENSAJES_GRUPOS": return tratarObtenerMensajesGrupos(mensaje.getJSONObject(PARAMETROS_NOMBRE));
             case "OBTENER_MENSAJES_NO_LEIDOS": return tratarObtenerMensajesNoLeidos(mensaje.getJSONObject(PARAMETROS_NOMBRE));
             case "CREAR_GRUPO": return tratarCrearGrupo(mensaje.getJSONObject(PARAMETROS_NOMBRE));
             case "ELIMINAR_GRUPO": return tratarEliminarGrupo(mensaje.getJSONObject(PARAMETROS_NOMBRE));
@@ -75,7 +77,7 @@ public class Rabbit {
         }
     }
 
-    private String tratarObtenerMensajes(JSONObject parametros) throws JSONException {
+    /*private String tratarObtenerMensajes(JSONObject parametros) throws JSONException {
         try {
             String fuente = parametros.getString("fuente");
             String destino = parametros.getString("destino");
@@ -87,6 +89,36 @@ public class Rabbit {
             return RespuestaFactory.crearRespuestaObtenerMensajes(true, jsonMensajes);
         } catch (Exception e) {
             return RespuestaFactory.crearRespuestaObtenerMensajes(false, null);
+        }
+    }*/
+
+    private String tratarObtenerMensajesUsuarios(JSONObject parametros) throws JSONException {
+        try {
+            String fuente = parametros.getString("fuente");
+            String destino = parametros.getString("destino");
+            List<Mensaje> mensajes = servicioChat.obtenerMensajesUsuarios(fuente, destino);
+            List<JSONObject> jsonMensajes = new ArrayList<>();
+            for (Mensaje m : mensajes) {
+                jsonMensajes.add(m.toJSON());
+            }
+            return RespuestaFactory.crearRespuestaObtenerMensajesUsuarios(true, jsonMensajes);
+        } catch (Exception e) {
+            return RespuestaFactory.crearRespuestaObtenerMensajesUsuarios(false, null);
+        }
+    }
+
+    private String tratarObtenerMensajesGrupos(JSONObject parametros) throws JSONException {
+        try {
+
+            String destino = parametros.getString("destino");
+            List<Mensaje> mensajes = servicioChat.obtenerMensajesGrupos( destino);
+            List<JSONObject> jsonMensajes = new ArrayList<>();
+            for (Mensaje m : mensajes) {
+                jsonMensajes.add(m.toJSON());
+            }
+            return RespuestaFactory.crearRespuestaObtenerMensajesGrupos(true, jsonMensajes);
+        } catch (Exception e) {
+            return RespuestaFactory.crearRespuestaObtenerMensajesGrupos(false, null);
         }
     }
 

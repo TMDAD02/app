@@ -14,4 +14,5 @@ public interface RepositorioMensaje extends CrudRepository<Mensaje, String> {
     @Query("select m from Mensaje m where (m.fuente = ?1 and m.destino = ?2) or (m.fuente = ?2 and m.destino = ?1)")
     Iterable<Mensaje> findByFuenteIdAndDestinoIdOr(Usuario fuente, Usuario destino);
 
+    Iterable<Mensaje> findByDestinogrupoId(long id);
 }

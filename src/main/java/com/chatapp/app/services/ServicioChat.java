@@ -52,10 +52,7 @@ public class ServicioChat {
         throw new Exception();
     }
 
-
-
-
-    public List<Mensaje> obtenerMensajes(String fuente, String destino) throws Exception {
+    /*public List<Mensaje> obtenerMensajes(String fuente, String destino) throws Exception {
         long t0 = System.currentTimeMillis();
         Optional<Usuario> uFuente = repositorioUsuario.findByNombre(fuente);
         Optional<Usuario> uDestino = repositorioUsuario.findByNombre(destino);
@@ -81,6 +78,48 @@ public class ServicioChat {
                 }
                 return listaMensajes;
             }
+            throw new Exception();
+        }
+    }*/
+
+
+    public List<Mensaje> obtenerMensajesUsuarios(String fuente, String destino) throws Exception {
+        long t0 = System.currentTimeMillis();
+        Optional<Usuario> uFuente = repositorioUsuario.findByNombre(fuente);
+        Optional<Usuario> uDestino = repositorioUsuario.findByNombre(destino);
+        long t1 = System.currentTimeMillis();
+        long tiempo = t1-t0;
+        System.out.println("Tiempo: " + tiempo);
+
+        if (uFuente.isPresent() && uDestino.isPresent()) {
+            Iterable<Mensaje> mensajes = repositorioMensaje.findByFuenteIdAndDestinoIdOr(uFuente.get(), uDestino.get());
+            List<Mensaje> listaMensajes = new ArrayList<>();
+            for (Mensaje m : mensajes) {
+                listaMensajes.add(m);
+            }
+            return listaMensajes;
+        } else {
+            System.out.println("NO HAY MENSAJES DE FUENTO A DESTINO");
+            throw new Exception();
+        }
+    }
+
+    public List<Mensaje> obtenerMensajesGrupos( String nameGroup) throws Exception {
+        long t0 = System.currentTimeMillis();
+        Optional<Grupo> destinoGrupo = repositorioGrupo.findByNombre(nameGroup);
+        long t1 = System.currentTimeMillis();
+        long tiempo = t1-t0;
+        System.out.println("Tiempo: " + tiempo);
+
+        if(destinoGrupo.isPresent()) {
+            Iterable<Mensaje> mensajes = repositorioMensaje.findByDestinogrupoId(destinoGrupo.get().getId());
+            List<Mensaje> listaMensajes = new ArrayList<>();
+            for (Mensaje m : mensajes) {
+                listaMensajes.add(m);
+            }
+            return listaMensajes;
+        }else{
+            System.out.println("EL GRUPO NO EXISTE");
             throw new Exception();
         }
     }
