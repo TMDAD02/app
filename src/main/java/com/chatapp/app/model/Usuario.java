@@ -14,7 +14,7 @@ public class Usuario {
     @GeneratedValue
     private long id;
 
-    @Column(name = "nombre")
+    @Column(name = "nombre", unique = true)
     private String nombre;
 
     @Column(name = "rol")

@@ -7,14 +7,11 @@ import java.util.*;
 @Table(name = "grupos")
 public class Grupo {
 
-
-
-
     @Id
     @GeneratedValue
     private long id;
 
-    @Column(name = "nombre")
+    @Column(name = "nombre", unique = true)
     private String nombre;
 
     @ManyToOne()

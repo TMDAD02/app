@@ -52,51 +52,21 @@ public class ServicioChat {
         throw new Exception();
     }
 
-    /*public List<Mensaje> obtenerMensajes(String fuente, String destino) throws Exception {
-        long t0 = System.currentTimeMillis();
-        Optional<Usuario> uFuente = repositorioUsuario.findByNombre(fuente);
-        Optional<Usuario> uDestino = repositorioUsuario.findByNombre(destino);
-
-        long t1 = System.currentTimeMillis();
-        long tiempo = t1-t0;
-        System.out.println("Tiempo: " + tiempo);
-        if (uFuente.isPresent() && uDestino.isPresent()) {
-            Iterable<Mensaje> mensajes = repositorioMensaje.findByFuenteIdAndDestinoIdOr(uFuente.get(), uDestino.get());
-            List<Mensaje> listaMensajes = new ArrayList<>();
-            for (Mensaje m : mensajes) {
-                listaMensajes.add(m);
-            }
-
-            return listaMensajes;
-        } else {
-            Optional<Grupo> destinoGrupo = repositorioGrupo.findByNombre(destino);
-            if(destinoGrupo.isPresent()) {
-                Iterable<Mensaje> mensajes = repositorioMensaje.findByLeidoAndDestinogrupoId(true, destinoGrupo.get().getId());
-                List<Mensaje> listaMensajes = new ArrayList<>();
-                for (Mensaje m : mensajes) {
-                    listaMensajes.add(m);
-                }
-                return listaMensajes;
-            }
-            throw new Exception();
-        }
-    }*/
-
 
     public List<Mensaje> obtenerMensajesUsuarios(String fuente, String destino) throws Exception {
         long t0 = System.currentTimeMillis();
         Optional<Usuario> uFuente = repositorioUsuario.findByNombre(fuente);
         Optional<Usuario> uDestino = repositorioUsuario.findByNombre(destino);
-        long t1 = System.currentTimeMillis();
-        long tiempo = t1-t0;
-        System.out.println("Tiempo: " + tiempo);
-
         if (uFuente.isPresent() && uDestino.isPresent()) {
             Iterable<Mensaje> mensajes = repositorioMensaje.findByFuenteIdAndDestinoIdOr(uFuente.get(), uDestino.get());
             List<Mensaje> listaMensajes = new ArrayList<>();
             for (Mensaje m : mensajes) {
                 listaMensajes.add(m);
             }
+
+            long t1 = System.currentTimeMillis();
+            long tiempo = t1-t0;
+            System.out.println("Tiempo: " + tiempo);
             return listaMensajes;
         } else {
             System.out.println("NO HAY MENSAJES DE FUENTO A DESTINO");
