@@ -3,6 +3,7 @@ package com.chatapp.app.rabbit;
 import com.chatapp.app.model.Mensaje;
 import com.chatapp.app.model.Usuario;
 import com.chatapp.app.services.ServicioChat;
+import com.chatapp.app.services.ServicioTrending;
 import com.chatapp.app.services.ServicioUsuario;
 import com.chatapp.app.services.ServicioGrupo;
 import org.json.JSONArray;
@@ -14,12 +15,14 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.amqp.core.Queue;
 import org.springframework.stereotype.Component;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Component
 public class Rabbit {
-    public static final String COLA_PETICIONES = "peticiones";
+    public static final String COLA_PETICIONES = "patos";
     public static final String PARAMETROS_NOMBRE = "PARAMETROS";
 
     @Autowired
@@ -30,6 +33,9 @@ public class Rabbit {
 
     @Autowired
     private ServicioChat servicioChat;
+
+    @Autowired
+    private ServicioTrending servicioTrending;
 
     @Bean
     public Queue colaPeticiones() {
@@ -58,6 +64,7 @@ public class Rabbit {
             case "ELIMINAR_GRUPO": return tratarEliminarGrupo(mensaje.getJSONObject(PARAMETROS_NOMBRE));
             case "ANADIR_USUARIO_GRUPO": return tratarAnadirUsuarioGrupo(mensaje.getJSONObject(PARAMETROS_NOMBRE));
             case "ELIMINAR_USUARIO_GRUPO": return tratarEliminarUsuarioGrupo(mensaje.getJSONObject(PARAMETROS_NOMBRE));
+            case "ACTUALIZAR_TRENDING": return tratarActualizarTrending(mensaje.getJSONObject(PARAMETROS_NOMBRE));
         }
 
         return null;
@@ -208,6 +215,16 @@ public class Rabbit {
                 return RespuestaFactory.crearRespuestaVerificarUsuario(false);
             }
 
+        } catch (Exception e) {
+            return RespuestaFactory.crearRespuestaVerificarUsuario(false);
+        }
+    }
+
+    String tratarActualizarTrending(JSONObject parametros) throws JSONException {
+        JSONObject listaTrending = parametros.getJSONObject("listaTrending");
+        try {
+            servicioTrending.actualizarTrending(listaTrending);
+            return RespuestaFactory.crearRespuestaVerificarUsuario(true);
         } catch (Exception e) {
             return RespuestaFactory.crearRespuestaVerificarUsuario(false);
         }

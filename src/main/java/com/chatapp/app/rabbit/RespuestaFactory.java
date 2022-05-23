@@ -26,16 +26,6 @@ public class RespuestaFactory {
         return jsonRespuesta.toString();
     }
 
-    public static String crearRespuestaRegistro(boolean correcto) throws JSONException {
-        JSONObject jsonRespuesta = new JSONObject();
-        if (correcto) {
-            jsonRespuesta.put(RESULTADO_RESPUESTA_NOMBRE, "REGISTRO_CORRECTO");
-        } else {
-            jsonRespuesta.put(RESULTADO_RESPUESTA_NOMBRE, "REGISTRO_INCORRECTO");
-        }
-
-        return jsonRespuesta.toString();
-    }
 
     public static String crearRespuestaVerificarUsuario(boolean correcto) throws JSONException {
         JSONObject jsonRespuesta = new JSONObject();
@@ -44,6 +34,18 @@ public class RespuestaFactory {
             jsonRespuesta.put(RESULTADO_RESPUESTA_NOMBRE, "USUARIO_EXISTE");
         } else {
             jsonRespuesta.put(RESULTADO_RESPUESTA_NOMBRE, "USUARIO_NO_EXISTE");
+        }
+
+        return jsonRespuesta.toString();
+    }
+
+    public static String crearRespuestaActualizarTrending(boolean correcto) throws JSONException {
+        JSONObject jsonRespuesta = new JSONObject();
+
+        if (correcto) {
+            jsonRespuesta.put(RESULTADO_RESPUESTA_NOMBRE, "ACTUALIZAR_TRENDING_CORRECTO");
+        } else {
+            jsonRespuesta.put(RESULTADO_RESPUESTA_NOMBRE, "ACTUALIZAR_TRENDING_INCORRECTO");
         }
 
         return jsonRespuesta.toString();
