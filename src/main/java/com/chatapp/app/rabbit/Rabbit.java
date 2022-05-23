@@ -22,7 +22,7 @@ import java.util.Map;
 
 @Component
 public class Rabbit {
-    public static final String COLA_PETICIONES = "patos";
+    public static final String COLA_PETICIONES = "peticiones";
     public static final String PARAMETROS_NOMBRE = "PARAMETROS";
 
     @Autowired
