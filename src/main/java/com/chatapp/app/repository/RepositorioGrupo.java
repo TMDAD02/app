@@ -23,6 +23,12 @@ public interface RepositorioGrupo extends CrudRepository<Grupo, String>{
             nativeQuery = true)
     void insertUserGroup(Long id_grupo, Long id_usuario);
 
+    @Query(
+            value =
+                    "delete from usuarios_grupos where id_grupo = ?1 and id_usuario = ?2",
+            nativeQuery = true)
+    void removeUserGrupo(Long id_grupo, Long id_usuario);
+
     Optional<Grupo> findById(long id);
 
     //void delete(Optional<Grupo> grupo);

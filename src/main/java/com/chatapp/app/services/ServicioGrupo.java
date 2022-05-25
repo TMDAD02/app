@@ -97,6 +97,12 @@ public class ServicioGrupo {
             Usuario ue = usuarioEliminar.get();
             if (g.getCreador().getId() == u.getId()) {
                 g.getColeccionUsuarios().remove(ue);
+                try {
+                    repGrupo.removeUserGrupo(g.getId(), ue.getId());
+                } catch (Exception e) {
+                    System.out.println("Excepcion no controlada: " + e);
+                }
+
             } else {
                 throw new Exception();
             }
