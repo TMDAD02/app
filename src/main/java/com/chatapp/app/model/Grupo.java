@@ -47,10 +47,11 @@ public class Grupo {
     public void setColeccionUsuarios(Set<Usuario> usuarios) { this.usuarios = usuarios; }
 
     public void aniadirUsuario(Usuario usuario){
-        System.out.println("Primera bien");
+        //System.out.println("Hello world");
         this.usuarios.add(usuario);
         System.out.println("Segunda mal...");
-        usuario.getGrupos().add(this);
+        //usuario.getGrupos().add(this);
+        System.out.println("Ok");
     }
 
 

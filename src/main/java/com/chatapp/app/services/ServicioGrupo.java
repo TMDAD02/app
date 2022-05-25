@@ -68,11 +68,17 @@ public class ServicioGrupo {
         if(grupo.isPresent() && usuario.isPresent() && creator.isPresent() ) {
             Grupo g = grupo.get();
             Usuario u = creator.get();
-            if(g.getCreador().getId() == u.getId() ){
+            if(g.getCreador().getId() == u.getId() ) {
+                try {
+                    System.out.println(g.getId() + ", " + usuario.get().getId());
+                    repGrupo.insertUserGroup(g.getId(), usuario.get().getId());
+                } catch (Exception e) {
+                    System.out.println("Excepcion no controlada: " + e);
+                }
                 g.aniadirUsuario(usuario.get());
-                repGrupo.save(g);
-                System.out.println("Usuario almacenado");
-            }else {
+
+            } else {
+                System.out.println("Fallo controlado");
                 throw new Exception();
             }
         } else {
