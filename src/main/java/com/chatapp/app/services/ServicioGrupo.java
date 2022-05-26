@@ -55,9 +55,26 @@ public class ServicioGrupo {
             Grupo grupo = new Grupo(nombreGrupo, usuario.get());
             repGrupo.save(grupo);
             anadirUsuarioGrupo(miUsuario, miUsuario, nombreGrupo);
+        }else{
+            throw new Exception();
         }
+    }
 
-        throw new Exception();
+    public void eliminarGrupo(String miUsuario, String nombreGrupo) throws Exception {
+        Optional<Grupo> grupo = repGrupo.findByNombre(nombreGrupo);
+        Optional<Usuario> usuario = repUsuario.findByNombre(miUsuario);
+        if(grupo.isPresent() && usuario.isPresent()) {
+            Grupo g = grupo.get();
+            Usuario u = usuario.get();
+            if (g.getCreador().getId() == u.getId()) {
+                g.getColeccionUsuarios().removeAll(g.getColeccionUsuarios());
+                repGrupo.delete(g);
+            } else {
+                throw new Exception();
+            }
+        }else {
+            throw new Exception();
+        }
     }
 
     public void anadirUsuarioGrupo(String creador, String nombreUsuario, String nombreGrupo) throws Exception {
@@ -112,21 +129,6 @@ public class ServicioGrupo {
 
     }
 
-    public void eliminarGrupo(String miUsuario, String nombreGrupo) throws Exception {
-        Optional<Grupo> grupo = repGrupo.findByNombre(nombreGrupo);
-        Optional<Usuario> usuario = repUsuario.findByNombre(miUsuario);
-        if(grupo.isPresent() && usuario.isPresent()) {
-            Grupo g = grupo.get();
-            Usuario u = usuario.get();
-            if (g.getCreador().getId() == u.getId()) {
-                g.getColeccionUsuarios().removeAll(g.getColeccionUsuarios());
-                repGrupo.delete(grupo.get());
-            } else {
-                throw new Exception();
-            }
-        }else {
-            throw new Exception();
-        }
-    }
+
 }
 
