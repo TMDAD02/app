@@ -17,16 +17,10 @@ public interface RepositorioGrupo extends CrudRepository<Grupo, String>{
     Iterable<Grupo> findByNombreNot(String miUsuario);
     boolean existsByNombre(String nombre);
 
-    @Query(
-            value =
-                    "insert into usuarios_grupos (id_grupo, id_usuario) values (?1, ?2)",
-            nativeQuery = true)
+    @Query(value = "insert into usuarios_grupos (id_grupo, id_usuario) values (?1, ?2)", nativeQuery = true)
     void insertUserGroup(Long id_grupo, Long id_usuario);
 
-    @Query(
-            value =
-                    "delete from usuarios_grupos where id_grupo = ?1 and id_usuario = ?2",
-            nativeQuery = true)
+    @Query(value = "delete from usuarios_grupos where id_grupo = ?1 and id_usuario = ?2", nativeQuery = true)
     void removeUserGrupo(Long id_grupo, Long id_usuario);
 
     Optional<Grupo> findById(long id);

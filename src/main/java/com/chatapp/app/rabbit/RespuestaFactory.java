@@ -174,7 +174,6 @@ public class RespuestaFactory {
         if (correcto) {
             jsonRespuesta.put(RESULTADO_RESPUESTA_NOMBRE, "ELIMINAR_USUARIO_GRUPO_CORRECTO");
             JSONObject parametros = new JSONObject();
-            //parametros.put("listaMensajes", new JSONArray(mensajes));
             jsonRespuesta.put(PARAMETROS_NOMBRE, parametros);
         } else {
             jsonRespuesta.put(RESULTADO_RESPUESTA_NOMBRE, "ELIMINAR_USUARIO_GRUPO_INCORRECTO");
@@ -183,4 +182,18 @@ public class RespuestaFactory {
         return jsonRespuesta.toString();
     }
 
+    public static String crearRespuestaChatsActivos(boolean correcto, long usuariosActivos) throws JSONException {
+        JSONObject jsonRespuesta = new JSONObject();
+
+        if (correcto) {
+            jsonRespuesta.put(RESULTADO_RESPUESTA_NOMBRE, "OBTENER_CHATS_ACTIVOS_CORRECTO");
+            JSONObject parametros = new JSONObject();
+            parametros.put("usuariosActivos", usuariosActivos);
+            jsonRespuesta.put(PARAMETROS_NOMBRE, parametros);
+        } else {
+            jsonRespuesta.put(RESULTADO_RESPUESTA_NOMBRE, "OBTENER_CHATS_ACTIVOS_INCORRECTO");
+        }
+
+        return jsonRespuesta.toString();
+    }
 }

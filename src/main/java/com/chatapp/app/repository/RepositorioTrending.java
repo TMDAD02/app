@@ -16,10 +16,7 @@ import java.util.Optional;
 @Repository
 public interface RepositorioTrending extends CrudRepository<Trending, String>{
     @Modifying
-    @Query(
-            value = "truncate table trending",
-            nativeQuery = true
-    )
+    @Query(value = "truncate table trending", nativeQuery = true)
     void truncate();
 
 

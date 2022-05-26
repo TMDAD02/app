@@ -65,10 +65,13 @@ public class Rabbit {
             case "ANADIR_USUARIO_GRUPO": return tratarAnadirUsuarioGrupo(mensaje.getJSONObject(PARAMETROS_NOMBRE));
             case "ELIMINAR_USUARIO_GRUPO": return tratarEliminarUsuarioGrupo(mensaje.getJSONObject(PARAMETROS_NOMBRE));
             case "ACTUALIZAR_TRENDING": return tratarActualizarTrending(mensaje.getJSONObject(PARAMETROS_NOMBRE));
+            case "OBTENER_CHATS_ACTIVOS": return tratarObtenerChatsActivos();
         }
 
         return null;
     }
+
+
 
     private String tratarObtenerMensajesNoLeidos(JSONObject parametros) throws JSONException {
         String usuario = parametros.getString("usuario");
@@ -224,30 +227,20 @@ public class Rabbit {
         JSONObject listaTrending = parametros.getJSONObject("listaTrending");
         try {
             servicioTrending.actualizarTrending(listaTrending);
-            return RespuestaFactory.crearRespuestaVerificarUsuario(true);
+            return RespuestaFactory.crearRespuestaActualizarTrending(true);
         } catch (Exception e) {
-            return RespuestaFactory.crearRespuestaVerificarUsuario(false);
-        }
-    }
-/*
-    String tratarRegistro(JSONObject parametros) throws JSONException {
-        try {
-            servicioUsuario.registrar(parametros.getString("nombre"), parametros.getString("contrasenaCifrada"),
-                    parametros.getString("email"));
-            return RespuestaFactory.crearRespuestaRegistro(true);
-
-       } catch (Exception e) {
-            return RespuestaFactory.crearRespuestaRegistro(false);
+            return RespuestaFactory.crearRespuestaActualizarTrending(false);
         }
     }
 
-    private String tratarLogin(JSONObject parametros) throws JSONException {
+    private String tratarObtenerChatsActivos() throws JSONException {
+
         try {
-            String id = servicioUsuario.iniciarSesion(parametros.getString("email"), parametros.getString("contrasenaCifrada"));
-            return RespuestaFactory.crearRespuestaLogin(true, id, "USER");
+            long usuariosActivos = servicioChat.obtenerChatsActivos();
+            return RespuestaFactory.crearRespuestaChatsActivos(true, usuariosActivos );
         } catch (Exception e) {
-            return RespuestaFactory.crearRespuestaLogin(false, null, null);
+            return RespuestaFactory.crearRespuestaChatsActivos(false, -1);
         }
-    }*/
+    }
 
 }
