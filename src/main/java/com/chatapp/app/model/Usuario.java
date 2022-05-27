@@ -25,8 +25,7 @@ public class Usuario {
     private List<Grupo> creadores;
 
     @ManyToMany(fetch = FetchType.EAGER,
-            cascade = {CascadeType.PERSIST, CascadeType.MERGE
-            }, mappedBy = "usuarios")
+            cascade = {CascadeType.PERSIST}, mappedBy = "usuarios")
     private Set<Grupo> grupos  = new HashSet<>();
 
 

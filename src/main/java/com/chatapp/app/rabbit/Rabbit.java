@@ -51,12 +51,10 @@ public class Rabbit {
     String tratarMensaje(JSONObject mensaje) throws JSONException {
         System.out.println(mensaje);
         switch (mensaje.getString("NOMBRE_COMANDO")){
-            //case "REGISTRO": return tratarRegistro(mensaje.getJSONObject(PARAMETROS_NOMBRE));
             case "AUTENTICAR_USUARIO": return tratarValidarUsuario(mensaje.getJSONObject(PARAMETROS_NOMBRE));
             case "GUARDAR_MENSAJE": return tratarGuardarMensaje(mensaje.getJSONObject(PARAMETROS_NOMBRE));
             case "OBTENER_TODOS_USUARIOS": return tratarObtenerTodosUsuarios(mensaje.getJSONObject(PARAMETROS_NOMBRE));
             case "OBTENER_TODOS_GRUPOS": return tratarObtenerTodosGrupos(mensaje.getJSONObject(PARAMETROS_NOMBRE));
-            //case "OBTENER_MENSAJES": return tratarObtenerMensajes(mensaje.getJSONObject(PARAMETROS_NOMBRE));
             case "OBTENER_MENSAJES_USUARIOS": return tratarObtenerMensajesUsuarios(mensaje.getJSONObject(PARAMETROS_NOMBRE));
             case "OBTENER_MENSAJES_GRUPOS": return tratarObtenerMensajesGrupos(mensaje.getJSONObject(PARAMETROS_NOMBRE));
             case "OBTENER_MENSAJES_NO_LEIDOS": return tratarObtenerMensajesNoLeidos(mensaje.getJSONObject(PARAMETROS_NOMBRE));

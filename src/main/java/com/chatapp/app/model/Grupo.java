@@ -19,7 +19,7 @@ public class Grupo {
     private Usuario creador;
 
     @ManyToMany(fetch = FetchType.EAGER,
-                cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+                cascade = {CascadeType.PERSIST})
     @JoinTable(
             name = "usuarios_grupos",
             joinColumns = @JoinColumn(name = "id_grupo"),
@@ -34,8 +34,6 @@ public class Grupo {
 
     public Grupo() { }
 
-    //crear dos contructorees de grupo
-
     public long getId() {
         return id;
     }
@@ -46,14 +44,13 @@ public class Grupo {
     public Set<Usuario> getColeccionUsuarios() { return usuarios; }
     public void setColeccionUsuarios(Set<Usuario> usuarios) { this.usuarios = usuarios; }
 
-    public void aniadirUsuario(Usuario usuario){
-        //System.out.println("Hello world");
+    public void aniadirUsuario(Usuario usuario) {
         this.usuarios.add(usuario);
-        System.out.println("Segunda mal...");
-        //usuario.getGrupos().add(this);
-        System.out.println("Ok");
+        usuario.getGrupos().add(this);
     }
 
-
-
+    public void eliminarUsuario(Usuario usuario) {
+        usuarios.removeIf(u -> u.getNombre().equals(usuario.getNombre()));
+        usuario.getGrupos().remove(this);
+    }
 }

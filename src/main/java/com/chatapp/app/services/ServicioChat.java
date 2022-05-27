@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -56,9 +55,9 @@ public class ServicioChat {
 
 
     public List<Mensaje> obtenerMensajesUsuarios(String fuente, String destino) throws Exception {
-        long t0 = System.currentTimeMillis();
         Optional<Usuario> uFuente = repositorioUsuario.findByNombre(fuente);
         Optional<Usuario> uDestino = repositorioUsuario.findByNombre(destino);
+
         if (uFuente.isPresent() && uDestino.isPresent()) {
             Iterable<Mensaje> mensajes = repositorioMensaje.findByFuenteIdAndDestinoIdOr(uFuente.get(), uDestino.get());
             List<Mensaje> listaMensajes = new ArrayList<>();
@@ -66,22 +65,14 @@ public class ServicioChat {
                 listaMensajes.add(m);
             }
 
-            long t1 = System.currentTimeMillis();
-            long tiempo = t1-t0;
-            System.out.println("Tiempo: " + tiempo);
             return listaMensajes;
         } else {
-            System.out.println("NO HAY MENSAJES DE FUENTO A DESTINO");
             throw new Exception();
         }
     }
 
     public List<Mensaje> obtenerMensajesGrupos( String nameGroup) throws Exception {
-        long t0 = System.currentTimeMillis();
         Optional<Grupo> destinoGrupo = repositorioGrupo.findByNombre(nameGroup);
-        long t1 = System.currentTimeMillis();
-        long tiempo = t1-t0;
-        System.out.println("Tiempo: " + tiempo);
 
         if(destinoGrupo.isPresent()) {
             Iterable<Mensaje> mensajes = repositorioMensaje.findByDestinogrupoId(destinoGrupo.get().getId());
@@ -91,7 +82,6 @@ public class ServicioChat {
             }
             return listaMensajes;
         }else{
-            System.out.println("EL GRUPO NO EXISTE");
             throw new Exception();
         }
     }

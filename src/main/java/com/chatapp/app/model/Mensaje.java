@@ -13,14 +13,14 @@ public class Mensaje {
     @GeneratedValue
     private Long id;
 
-    @ManyToOne(optional = false, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToOne(optional = false, cascade = CascadeType.ALL)
     private Usuario fuente;
 
-    @ManyToOne(optional = false, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToOne(optional = false, cascade = CascadeType.ALL)
     private Usuario destino;
 
-    @ManyToOne(optional = true, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private Grupo destinogrupo;
+    @ManyToOne(optional = true, cascade = CascadeType.ALL)
+    private Grupo destinogrupo; // Crear una herencia para esto! (Dos especializaciones de mensajes)
 
     @Column(name = "fecha")
     private Date fecha;
@@ -45,6 +45,14 @@ public class Mensaje {
         this.fuente = fuente;
         this.destino = new Usuario();
         this.destinogrupo = destino;
+        this.fecha = fecha;
+        this.contenido = contenido;
+        this.leido = leido;
+    }
+
+    public Mensaje(Date fecha, String contenido, boolean leido) {
+        this.fuente = fuente;
+        this.destino = new Usuario();
         this.fecha = fecha;
         this.contenido = contenido;
         this.leido = leido;
